@@ -98,7 +98,7 @@ lvim.builtin.treesitter.ensure_installed = { "comment", "markdown_inline", "make
   "python", "lua", "typescript", "tsx", "css", "rust", "yaml", "go" }
 
 -- -- generic LSP settings <https://www.lunarvim.org/docs/languages#lsp-support>
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "yamlls", "rust_analyzer" })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "yamlls", "rust_analyzer", "cssls" })
 
 local yamllsOpts = {
   settings = {
@@ -139,9 +139,20 @@ local rustAnalyzerOpts = {
     }
   }
 }
+local csslsOpts = {
+  settings = {
+    css = {
+      validate = true,
+      lint = {
+        unknownAtRules = "ignore",
+      }
+    }
+  }
+}
 local lspManager = require("lvim.lsp.manager")
 lspManager.setup("yamlls", yamllsOpts)
 lspManager.setup("rust_analyzer", rustAnalyzerOpts)
+lspManager.setup("cssls", csslsOpts)
 
 -- --- disable automatic installation of servers
 -- lvim.lsp.installer.setup.automatic_installation = false
